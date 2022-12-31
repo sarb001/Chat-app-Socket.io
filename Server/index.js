@@ -8,7 +8,9 @@ const io = new Server({
 const app = express();
 
 app.use(bodyParser.json());
+
 const emailtosocketmapping = new  Map();
+const socketToEmailPassing = new  Map();
 
 io.on('connection' , (socket) => {
     console.log(' New Connection adeddd ');
@@ -19,6 +21,13 @@ io.on('connection' , (socket) => {
         socket.join(roomid);                                        // tell socket to join 
         socket.emit('Join-Room is ' , {roomid});                      // Event happened  or can day  Server Side for joining room 
         socket.broadcast.to(roomid).emit('user-joined' , {emailid});        // show other user in already present room
+    });
+
+    socket.on('call-user' , (data) => {                              // Server is listening to offer that u made 
+        const {emailid , offer} = data ;
+        const fromEmail = socketToEmailPassing.get(socketid);      
+        const socketid = emailtosocketmapping.get(emailid);           // Will get socketid from email to Convert 
+        socket.to(socketid).emit('incoming-call' , { from : fromEmail , offer })                       // In Backend 
     });
 })
 
