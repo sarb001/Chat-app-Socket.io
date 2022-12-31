@@ -1,0 +1,12 @@
+.main >input 
+{
+    display: flex;
+    margin: 20px 10px;
+}
+input 
+{padding: 3px;
+}
+.home-container
+{
+    padding: 5%;
+}
