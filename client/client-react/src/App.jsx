@@ -3,6 +3,7 @@ import React from 'react';
 import { Routes ,Route } from 'react-router-dom';
 import Home from './Home';
 import { SocketProvider } from './Providers/Socket';
+import Room from './Room'; 
 
 function App() {
  
@@ -12,7 +13,7 @@ function App() {
               <SocketProvider>
                     <Routes>
                       <Route exact path = "/" element = {<Home />}>  </Route>
-                      <Route exact path = "/room/:roomid" element = {<h1> Hey , there u rin the Room  </h1>}>  </Route>
+                      <Route exact path = "/room/:roomid" element = {<Room />}>  </Route>
                     </Routes>
             </SocketProvider>
           </div>

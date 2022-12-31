@@ -17,7 +17,7 @@ io.on('connection' , (socket) => {
         console.log('User' ,emailid , 'Joined Rooms' , roomid);
         emailtosocketmapping.set(emailid, socket.id);                // set email id for mapping specific user 
         socket.join(roomid);                                        // tell socket to join 
-        socket.emit('joined-room' , {roomid});                      // Event happened  or can day  Server Side for joining room 
+        socket.emit('Join-Room is ' , {roomid});                      // Event happened  or can day  Server Side for joining room 
         socket.broadcast.to(roomid).emit('user-joined' , {emailid});        // show other user in already present room
     });
 })
