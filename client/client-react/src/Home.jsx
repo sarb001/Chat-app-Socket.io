@@ -14,7 +14,6 @@ export const Home = () => {
 
     // Get and Shift Roomid to other Component
     const handleroomjoined = ({roomid}) => {
-      // console.log('Room Joined' , roomid);
       navigate(`/room/${roomid}`);
     };
 
