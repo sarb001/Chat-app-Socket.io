@@ -2,21 +2,41 @@
 import React  , { useState ,useEffect } from 'react';
 import './Home.css';
 import { useSocket } from './Providers/Socket';
+import { useNavigate } from 'react-router-dom';
 
 export const Home = () => {
     
     const { socket } = useSocket();
-    socket.emit('join-room' , { roomid : '5' , emailid  : 'ajaydev@gmail.com' });
+
+    const [email ,setEmail] = useState();
+    const [roomid ,setRoomid] = useState();
+    const navigate = useNavigate();
+
+    // Get and Shift Roomid to other Component
+    const handleroomjoined = ({roomid}) => {
+      // console.log('Room Joined' , roomid);
+      navigate(`/room/${roomid}`);
+    };
+
+    useEffect(() => {
+      socket.on('joined-room' ,handleroomjoined )
+    },[socket])
+
+
+    // Get Email  & Roomid 
+    const handlejoinroom = () => {      
+      socket.emit('join-room' , {emailid :email , roomid});
+  };
 
   return (
     <div>  
         <div className = "home-container">
                 <div className = "main">
-                        <input  type = "email"     onChange = {(e) => setEmail(e.target.value)}
+                        <input  type = "email"   value = {email}  onChange = {(e) => setEmail(e.target.value)}
                          placeholder = 'Enter your email....'  />
-                        <input  type = "text"     onChange = {(e) => setRoomid(e.target.value)}
+                        <input  type = "text"    value = {roomid}   onChange = {(e) => setRoomid(e.target.value)}
                          placeholder = 'Enter your Room id ....' />
-                        <button >  Enter  Room  </button>
+                        <button onClick = {handlejoinroom} >  Enter  Room  </button>
                 </div>
         </div>
     </div>

@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { Server } = require('socket.io');
 
+// Backend Side 
+
 const io = new Server({
     cors : true,
 });
@@ -20,6 +22,8 @@ io.on('connection' , (socket) => {
         console.log('User' , emailid , 'Joined Room' ,roomid );
         emailtosocketmapping.set(emailid ,socket.id);
         socket.join(roomid);
+                             // on Backend  side - Joined me in this Room  ( Below )
+        socket.emit('joined-room' , {roomid});          
         socket.broadcast.to(roomid).emit('user-joined' , { emailid });
     });
 })
